@@ -92,13 +92,6 @@ init() {
 				value = \$2;
 			}; END { print value }" "$config_file" "$config_file_usr"
 		)"
-		conf_and_operator="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*and_operator/ {
-				gsub(/#.*/,\"\",\$2);
-				gsub(/[ \t]+/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
 		conf_raw_output="$(
 			"$conf_awk" -F '=' "/^[ ,\t]*raw_output/ {
 				gsub(/#.*/,\"\",\$2);
@@ -173,7 +166,7 @@ init() {
 	conf_sources="${conf_sources:-$available_sources}"
 	conf_fuzzy_finder="fzf"
 	conf_quick_search="${conf_quick_search:-false}"
-	conf_and_operator="${conf_and_operator:-false}"
+	conf_and_operator="false"
 	conf_raw_output="${conf_raw_output:-false}"
 	conf_man_lang="en"
 	conf_wiki_lang="en"
