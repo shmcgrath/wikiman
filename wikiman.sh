@@ -227,12 +227,6 @@ If no keywords are provided, show all pages.
 
 Options:
 
-  -l  search language(s)
-
-  -s  sources to use
-
-  -f  fuzzy finder to use
-
   -q  enable quick search mode
 
   -a  enable AND operator mode
@@ -242,8 +236,6 @@ Options:
   -k  keep open after viewing a result
 
   -c  show source column
-
-  -H  viewer for HTML pages
 
   -R  print raw output
 
@@ -315,7 +307,6 @@ while getopts W:C:pqahRSkcv o; do
 	case $o in
 		(p) conf_tui_preview='false';;
 		(k) conf_tui_keep_open='true';;
-		(f) conf_fuzzy_finder="$OPTARG";;
 		(q) conf_quick_search='true';;
 		(a) conf_and_operator='true';;
 		(R) conf_raw_output='true';;
