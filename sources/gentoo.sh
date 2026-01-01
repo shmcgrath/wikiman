@@ -2,7 +2,7 @@
 
 name='gentoo'
 description='Gentoo Wiki'
-path="$conf_sys_usr/share/doc/gentoo-wiki/wiki"
+path="$conf_local_share/doc/gentoo-wiki/wiki"
 
 available() {
 
