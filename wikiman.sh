@@ -85,13 +85,6 @@ init() {
 				value = \$2;
 			}; END { print value }" "$config_file" "$config_file_usr"
 		)"
-		conf_fuzzy_finder="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*fuzzy_finder/ {
-				gsub(/#.*/,\"\",\$2);
-				gsub(/[ \t]+/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
 		conf_quick_search="$(
 			"$conf_awk" -F '=' "/^[ ,\t]*quick_search/ {
 				gsub(/#.*/,\"\",\$2);
@@ -185,7 +178,7 @@ init() {
 	# Set configuration variables
 
 	conf_sources="${conf_sources:-$available_sources}"
-	conf_fuzzy_finder="${conf_fuzzy_finder:-fzf}"
+	conf_fuzzy_finder="fzf"
 	conf_quick_search="${conf_quick_search:-false}"
 	conf_and_operator="${conf_and_operator:-false}"
 	conf_raw_output="${conf_raw_output:-false}"
@@ -387,7 +380,7 @@ completion() {
 
 init
 
-while getopts s:H:f:W:C:pqahRSkcv o; do
+while getopts s:H:W:C:pqahRSkcv o; do
 	case $o in
 		(p) conf_tui_preview='false';;
 		(H) conf_tui_html="$OPTARG";;
