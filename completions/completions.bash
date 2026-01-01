@@ -15,7 +15,7 @@ function _wikiman_completions()
 
     case ${prev} in
         -W)
-            COMPREPLY=($(compgen -W "bash fish zsh" -- ${cur}));;
+            COMPREPLY=($(compgen -W "bash zsh" -- ${cur}));;
         *)
             COMPREPLY=($(compgen -W "${opts}" -- ${cur}));;
     esac

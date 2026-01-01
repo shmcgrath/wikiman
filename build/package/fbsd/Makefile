@@ -22,13 +22,12 @@ GH_ACCOUNT=	filiparag
 
 NO_ARCH=	yes
 
-OPTIONS_DEFINE=		BASH CONFIG DOCS FISH WDGTS ZSH
-OPTIONS_DEFAULT=	BASH CONFIG DOCS FISH WDGTS ZSH
+OPTIONS_DEFINE=		BASH CONFIG DOCS WDGTS ZSH
+OPTIONS_DEFAULT=	BASH CONFIG DOCS WDGTS ZSH
 OPTIONS_SUB=		yes
 CONFIG_DESC=		Global configuration file
 WDGTS_DESC=		Shell keybind widgets
 BASH_PLIST_FILES=	etc/bash_completion.d/wikiman-completion.bash
-FISH_PLIST_FILES=	share/fish/completions/wikiman.fish
 ZSH_PLIST_FILES=	share/zsh/site-functions/_wikiman
 
 do-install:
@@ -51,10 +50,6 @@ do-install-CONFIG-on:
 do-install-DOCS-on:
 	@${MKDIR} ${STAGEDIR}${DOCSDIR}
 	${INSTALL_DATA} ${WRKSRC}/README.md ${STAGEDIR}${DOCSDIR}
-
-do-install-FISH-on:
-	@${MKDIR} ${STAGEDIR}${PREFIX}/share/fish/completions
-	${INSTALL_DATA} ${WRKSRC}/completions/completions.fish ${STAGEDIR}${PREFIX}/share/fish/completions/wikiman.fish
 
 do-install-WDGTS-on:
 	@${MKDIR} ${STAGEDIR}${DATADIR}/widgets

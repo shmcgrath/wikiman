@@ -300,9 +300,6 @@ completion() {
 	case "$1" in
 		sources_bash)
 			echo "$sources" | "$conf_awk" -F '\t' '{printf("%s ",$1)}';;
-		sources_fish)
-			echo "$source_descriptions" | \
-			"$conf_awk" -F '\t' '{ printf("%s\\t\"%s\"\n", $1, $2); }';;
 		sources_zsh)
 			echo "$source_descriptions" | \
 			"$conf_awk" -F '\t' '{ printf("%s:%s\n", $1, $2); }';;

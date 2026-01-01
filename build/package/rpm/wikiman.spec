@@ -36,10 +36,8 @@ make prefix=%{buildroot} install
 /usr/share/%{name}/sources/gentoo.sh
 /usr/share/%{name}/sources/tldr.sh
 /usr/share/%{name}/widgets/widget.bash
-/usr/share/%{name}/widgets/widget.fish
 /usr/share/%{name}/widgets/widget.zsh
 /etc/bash_completion.d/%{name}-completion.bash
-/usr/share/fish/completions/%{name}.fish
 /usr/share/zsh/site-functions/_%{name}
 /usr/share/man/man1/%{name}.1.gz
 %config(noreplace) /etc/%{name}.conf

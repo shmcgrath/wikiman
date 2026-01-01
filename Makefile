@@ -45,12 +45,9 @@ widgets: core
 completions: core
 	test		! -f	${BUILDDIR}/.local
 	mkdir		-p 	${BUILDDIR}/etc/bash_completion.d \
-				${BUILDDIR}/usr/share/fish/completions \
 				${BUILDDIR}/usr/share/zsh/site-functions
 	install 	-Dm644 	${WORKDIR}/completions/completions.bash	\
 				${BUILDDIR}/etc/bash_completion.d/${NAME}-completion.bash
-	install 	-Dm644 	${WORKDIR}/completions/completions.fish \
-				${BUILDDIR}/usr/share/fish/completions/${NAME}.fish
 	install 	-Dm644 	${WORKDIR}/completions/completions.zsh \
 				${BUILDDIR}/usr/share/zsh/site-functions/_${NAME}
 
@@ -93,7 +90,6 @@ uninstall:
 				$(prefix)/usr/bin/${NAME} \
 				$(prefix)/usr/share/man/man1/${NAME}.1.gz \
 				$(prefix)/etc/bash_completion.d/${NAME}-completion.bash \
-				$(prefix)/usr/share/fish/completions/${NAME}.fish \
 				$(prefix)/usr/share/zsh/site-functions/_${NAME}
 	rm		-rf	$(prefix)/usr/share/${NAME} \
 				$(prefix)/usr/share/licenses/${NAME} \
@@ -103,7 +99,6 @@ uninstall:
 				$(prefix)/usr/local/bin/${NAME} \
 				$(prefix)/usr/local/share/man/man1/${NAME}.1.gz \
 				$(prefix)/etc/bash_completion.d/${NAME}-completion.bash \
-				$(prefix)/usr/share/fish/completions/${NAME}.fish \
 				$(prefix)/usr/share/zsh/site-functions/_${NAME}
 	rm		-rf 	$(prefix)/usr/local/share/${NAME} \
 				$(prefix)/usr/local/share/licenses/${NAME} \

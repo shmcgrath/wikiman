@@ -9,5 +9,4 @@ share/man/man1/wikiman.1.gz
 @sample %%CONFIG%%etc/wikiman.conf.sample
 %%DOCS%%%%PORTDOCS%%%%DOCSDIR%%/README.md
 %%WDGTS%%%%DATADIR%%/widgets/widget.bash
-%%WDGTS%%%%DATADIR%%/widgets/widget.fish
 %%WDGTS%%%%DATADIR%%/widgets/widget.zsh

@@ -182,9 +182,6 @@ Add appropriate line from below to your `.bashrc`-like configuration file to mak
 # bash
 source /usr/share/wikiman/widgets/widget.bash
 
-# fish
-source /usr/share/wikiman/widgets/widget.fish
-
 # zsh
 source /usr/share/wikiman/widgets/widget.zsh
 ```
