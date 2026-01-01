@@ -127,13 +127,6 @@ init() {
 				value = \$2;
 			}; END { print value }" "$config_file" "$config_file_usr"
 		)"
-		conf_tui_html="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*tui_html/ {
-				gsub(/#.*/,\"\",\$2);
-				gsub(/[ \t]+/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
 	fi
 
 	# Widgets
@@ -187,7 +180,7 @@ init() {
 	conf_tui_preview="${conf_tui_preview:-true}"
 	conf_tui_keep_open="${conf_tui_keep_open:-false}"
 	conf_tui_source_column="${conf_tui_source_column:-false}"
-	conf_tui_html="${conf_tui_html:-w3m}"
+	conf_tui_html="w3m"
 
 	export conf_sources
 	export conf_fuzzy_finder
@@ -380,10 +373,9 @@ completion() {
 
 init
 
-while getopts s:H:W:C:pqahRSkcv o; do
+while getopts s:W:C:pqahRSkcv o; do
 	case $o in
 		(p) conf_tui_preview='false';;
-		(H) conf_tui_html="$OPTARG";;
 		(k) conf_tui_keep_open='true';;
 		(s) conf_sources="$(
 				echo "$OPTARG" | tr ',-' ' _'
