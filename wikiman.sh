@@ -53,30 +53,18 @@ init() {
 
 	# BSD compatibility: Installation prefix
 
-	conf_sys_usr="$HOME/.local/share"
-	conf_sys_etc="${XDG_CONFIG_HOME:-"$HOME/.config"}/wikiman"
+	# conf_sys_usr is used in sources/*
+	conf_sys_usr="${XDG_DATA_HOME:-$HOME/.local}"
 	export conf_sys_usr
-	export conf_sys_etc
-
 	# Configuration variables
 
 	conf_version='2.14.1'
 
-	config_dir="${XDG_CONFIG_HOME:-"$HOME/.config"}/wikiman"
-	config_file="$conf_sys_etc/wikiman.conf"
-	config_file_usr="$config_dir/wikiman.conf"
-
-	[ -f "$config_file" ] && [ -r "$config_file" ] || \
-		config_file=''
-	[ -f "$config_file_usr" ] && [ -r "$config_file_usr" ] || \
-		config_file_usr=''
 	# Widgets
-
 	widgets_dir="$conf_sys_usr/share/wikiman/widgets"
 
 	# Sources
-
-	sources_dir="${XDG_DATA_HOME:-$HOME/.local/share}/wikiman/sources"
+	sources_dir="$conf_sys_usr/share/wikiman/sources"
 
 	# Detect source modules
 
