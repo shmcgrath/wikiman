@@ -7,8 +7,6 @@ It provides an easy interface for browsing documentation without the need to be 
 > [!TIP]
 > By default, Wikiman only searches manual pages. Follow [these instructions](#additional-documentation-sources) to download and enable optional documentation sources.
 
-![Demo](demo.gif)
-
 ## Installation
 
 ### Arch Linux
@@ -20,33 +18,6 @@ pacman -S wikiman
 
 # Optional: Enable ArchWiki
 pacman -S arch-wiki-docs
-```
-
-If you are running Manjaro or another Arch-based distribution, download the latest _.pkg.tar.zst_ package from [Releases](https://github.com/filiparag/wikiman/releases/latest/) tab, and follow [these](https://github.com/filiparag/wikiman#installing-additional-sources) instructions to add ArchWiki as a source.
-
-```sh
-sudo pacman -U wikiman*.pkg.tar.zst
-```
-
-### Ubuntu / Debian
-
-Download latest _.deb_ package from [Releases](https://github.com/filiparag/wikiman/releases/latest/) tab.
-
-```bash
-sudo apt update
-sudo apt install ./wikiman*.deb
-```
-
-### Fedora / openSUSE
-
-Download latest _.rpm_ package from [Releases](https://github.com/filiparag/wikiman/releases/latest/) tab.
-
-```bash
-# Fedora
-sudo dnf install wikiman*.rpm
-
-# openSUSE (skip signature verification)
-sudo zypper in wikiman*.rpm
 ```
 
 ### FreeBSD
