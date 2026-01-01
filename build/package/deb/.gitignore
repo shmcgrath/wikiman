@@ -1,6 +1,0 @@
-*
-!.gitignore
-!control
-!conffiles
-!compose.yml
-!.env
