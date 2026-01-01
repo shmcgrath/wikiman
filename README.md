@@ -1,3 +1,6 @@
+## License
+This wikiman fork is purely for my own use. I do not intend to package it on any platform. The original and upstream version of [wikiman](https://github.com/filiparag/wikiman) was released under the MIT license by Filip Parag in 2020. This fork takes ideas from [arch-wiki-lite](https://gitlab.archlinux.org/grawlinson/arch-wiki-lite), which is under GNU GPLv2. It is my understanding that this fork is released under GLPv2. This does NOT change the upstream license at all. Please let me know if there are any licensing issues. Thanks.
+
 ## About
 
 **Wikiman** is a universal offline documentation search engine. It can browse system manual pages, [tldr-pages](https://github.com/tldr-pages/tldr), the [ArchWiki](https://wiki.archlinux.org/), [Gentoo Wiki](https://wiki.gentoo.org/wiki/), [FreeBSD documentation](https://docs.freebsd.org/), and many other sources curated by [DevDocs](https://devdocs.io/).
@@ -6,6 +9,7 @@ It provides an easy interface for browsing documentation without the need to be 
 
 > [!TIP]
 > By default, Wikiman only searches manual pages. Follow [these instructions](#additional-documentation-sources) to download and enable optional documentation sources.
+
 
 ## Installation
 
