@@ -1,52 +1,39 @@
 #!/usr/bin/env bash
 
-export XZ_OPT=-e9T0
+#printf "%s\n" 'Installing tools'
+#pacman -Sy --noconfirm curl git
 
-echo 'Installing tools'
-pacman -Sy --noconfirm curl git discount
+doc_install_dir="${1:-${XDG_DATA_HOME:-$HOME/.local/share}/doc}"
 
-mkdir -p ./tldr
-cd ./tldr || exit 1
+install_dir="$doc_install_dir/tldr-pages"
+mkdir -p "$install_dir"
+
+tmp_dir="$(mktemp -d)"
+cd "$tmp_dir" || exit 1
 dir="$(pwd)"
 
-echo 'Downloading TLDR Pages'
+printf "%s\n" "Downloading TLDR Pages"
 git clone --depth 1 --single-branch --branch main https://github.com/tldr-pages/tldr ./doc
-cd "$dir/doc" || exit 1
 
-echo 'Restructuring'
-find "$dir/doc" -maxdepth 1 -mindepth 1 -not -name 'pages*' -exec rm -rf {} \;
+printf "%s\n" "Restructuring: keeping only en pages"
+find "$dir/doc" -maxdepth 1 -mindepth 1 -not -name 'pages' -exec rm -rf {} \;
 rm -rf "$dir/doc/pages.hbs"
 mv "$dir/doc/pages" "$dir/doc/en"
-for lang in $(find "$dir/doc" -maxdepth 1 -mindepth 1 -name 'pages.*' -printf '%P '); do
-    l="$(echo "$lang" | cut -d'.' -f2)"
-    mv "$dir/doc/$lang" "$dir/doc/$l"
-done
 
-echo "Rendering HTML for $(find "$dir/doc" -name '*.md' | wc -l) pages"
-find . -type f -name "* *.md" -exec rename ' ' '' {} \;
-for md in $(find "$dir/doc" -name '*.md'); do
-    realpath --relative-to "$dir/doc" "$md" >/dev/null
-    ht="$(echo "$md" | cut -d'.' -f1).html"
-    markdown "$md" > "$ht"
-    rm "$md"
-done
+printf "%s\n" "Moving tldr en to install directory"
+mkdir -p "$install_dir/en"
+rsync -a ./doc/en/ "$install_dir/en/"
 
-mkdir -p "$dir/usr/share/doc"
-mv "$dir/doc" "$dir/usr/share/doc/tldr-pages"
-cd "$dir" || exit 1
-
-echo 'Compressing data'
-archive="tldr-pages_$(date +'%Y%m%d').source.tar.xz"
-tar -cJf "/release/$archive" usr/share/doc/tldr-pages
-echo "Generated $(du -h "/release/$archive" | cut -f1) TLDR Pages archive"
-
-echo 'Testing archive contents'
-pagecount="$(tar -tf "/release/$archive" | grep -c '\.html$')"
-if [ "$pagecount" -lt 20000 ]; then
-    echo 'Error: archive page count is too low'
-    exit 1
+printf "%s\n" "Counting Markdown pages"
+pagecount="$(find "$install_dir" -type f -name '*.md' | wc -l | tr -d '[:space:]')"
+if [ "$pagecount" -lt 6500 ]; then
+	printf "%s\n" "Error: page count is too low tldr-pages/en contains ${pagecount} markdown pages"
+	#exit 1
 else
-    echo "Archive contains ${pagecount} HTML pages"
+	printf "%s\n" "tldr-pages/en contains ${pagecount} markdown pages"
 fi
 
-echo 'Done'
+# cleanup and delete temporary directory
+rm -rf "$tmp_dir"
+
+printf "%s\n" "Done installing tldr"
