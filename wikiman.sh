@@ -70,23 +70,6 @@ init() {
 		config_file=''
 	[ -f "$config_file_usr" ] && [ -r "$config_file_usr" ] || \
 		config_file_usr=''
-
-	if [ -z "$config_file" ] && [ -z "$config_file_usr" ]; then
-		# >&2 echo "warning: configuration file missing, using defaults"
-		true
-	else
-		conf_sources="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*sources/ {
-				gsub(\",\",\" \",\$2);
-				gsub(/#.*/,\"\",\$2);
-				gsub(/ +/,\" \",\$2);
-				gsub(/^ /,\"\",\$2);
-				gsub(/ $/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
-	fi
-
 	# Widgets
 
 	widgets_dir="$conf_sys_usr/share/wikiman/widgets"
@@ -331,13 +314,10 @@ completion() {
 
 init
 
-while getopts s:W:C:pqahRSkcv o; do
+while getopts W:C:pqahRSkcv o; do
 	case $o in
 		(p) conf_tui_preview='false';;
 		(k) conf_tui_keep_open='true';;
-		(s) conf_sources="$(
-				echo "$OPTARG" | tr ',-' ' _'
-			)";;
 		(f) conf_fuzzy_finder="$OPTARG";;
 		(q) conf_quick_search='true';;
 		(a) conf_and_operator='true';;

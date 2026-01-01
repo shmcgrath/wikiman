@@ -10,16 +10,4 @@ _arguments -s \
 		'-c[show source column]' \
 		'-k[keep open after viewing a result]' \
 		'-h[print version and exit]' \
-		'-W[print widget code for specified shell and exit]' \
-		'-s[sources to use]:source:->sources'
-
-case $state in
-	sources)
-		local -a _sources
-		_sources=()
-		while IFS= read -r line; do
-		_sources+=("$line")
-		done < <(WIKIMAN_INTERNAL=1 wikiman -C sources_zsh)
-		_describe 'source' _sources
-		;;
-esac
+		'-W[print widget code for specified shell and exit]'

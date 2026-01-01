@@ -6,7 +6,7 @@ function _wikiman_completions()
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="-s -q -a -p -k -c -R -S -W -v -h"
+    opts="-q -a -p -k -c -R -S -W -v -h"
 
     if [[ ${cur} == -* ]] ; then
         COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
@@ -14,8 +14,6 @@ function _wikiman_completions()
     fi
 
     case ${prev} in
-        -s)
-            COMPREPLY=($(compgen -W "$(WIKIMAN_INTERNAL=1 wikiman -C sources_bash)" -- ${cur}));;
         -W)
             COMPREPLY=($(compgen -W "bash fish zsh" -- ${cur}));;
         *)
