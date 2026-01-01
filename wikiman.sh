@@ -99,13 +99,6 @@ init() {
 				value = \$2;
 			}; END { print value }" "$config_file" "$config_file_usr"
 		)"
-		conf_tui_source_column="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*tui_source_column/ {
-				gsub(/#.*/,\"\",\$2);
-				gsub(/[ \t]+/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
 	fi
 
 	# Widgets
@@ -158,7 +151,7 @@ init() {
 	conf_wiki_lang="en"
 	conf_tui_preview="${conf_tui_preview:-true}"
 	conf_tui_keep_open="false"
-	conf_tui_source_column="${conf_tui_source_column:-false}"
+	conf_tui_source_column="false"
 	conf_tui_html="w3m"
 
 	export conf_sources
