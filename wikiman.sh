@@ -113,20 +113,6 @@ init() {
 				value = \$2;
 			}; END { print value }" "$config_file" "$config_file_usr"
 		)"
-		conf_man_lang="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*man_lang/ {
-				gsub(\",\",\" \",\$2);
-				gsub(/#.*/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
-		conf_wiki_lang="$(
-			"$conf_awk" -F '=' "/^[ ,\t]*wiki_lang/ {
-				gsub(\",\",\" \",\$2);
-				gsub(/#.*/,\"\",\$2);
-				value = \$2;
-			}; END { print value }" "$config_file" "$config_file_usr"
-		)"
 		conf_tui_preview="$(
 			"$conf_awk" -F '=' "/^[ ,\t]*tui_preview/ {
 				gsub(/#.*/,\"\",\$2);
@@ -204,8 +190,8 @@ init() {
 	conf_quick_search="${conf_quick_search:-false}"
 	conf_and_operator="${conf_and_operator:-false}"
 	conf_raw_output="${conf_raw_output:-false}"
-	conf_man_lang="${conf_man_lang:-en}"
-	conf_wiki_lang="${conf_wiki_lang:-en}"
+	conf_man_lang="en"
+	conf_wiki_lang="en"
 	conf_tui_preview="${conf_tui_preview:-true}"
 	conf_tui_keep_open="${conf_tui_keep_open:-false}"
 	conf_tui_source_column="${conf_tui_source_column:-false}"
@@ -402,17 +388,11 @@ completion() {
 
 init
 
-while getopts l:s:H:f:W:C:pqahRSkcv o; do
+while getopts s:H:f:W:C:pqahRSkcv o; do
 	case $o in
 		(p) conf_tui_preview='false';;
 		(H) conf_tui_html="$OPTARG";;
 		(k) conf_tui_keep_open='true';;
-		(l) conf_man_lang="$(
-				echo "$OPTARG" | tr ',-' ' _'
-			)";
-			conf_wiki_lang="$(
-				echo "$OPTARG" | tr ',_' ' -'
-			)";;
 		(s) conf_sources="$(
 				echo "$OPTARG" | tr ',-' ' _'
 			)";;
