@@ -149,13 +149,12 @@ init() {
 
 	# Sources
 
-	sources_dir="$conf_sys_usr/share/wikiman/sources"
-	sources_dir_usr="$config_dir/sources"
+	sources_dir="${XDG_DATA_HOME:-$HOME/.local/share}/wikiman/sources"
 
 	# Detect source modules
 
 	sources="$(
-		eval "$conf_find $sources_dir_usr $sources_dir -type f 2>/dev/null" | \
+		eval "$sources_dir -type f 2>/dev/null" | \
 		"$conf_awk" -F '/' \
 			"BEGIN {OFS=\"\t\"} {
 				path = \$0;
