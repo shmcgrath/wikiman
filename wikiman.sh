@@ -53,36 +53,8 @@ init() {
 
 	# BSD compatibility: Installation prefix
 
-	case "$(dirname "$0")" in
-		"$HOME/bin"|"$HOME/.local/bin")
-			conf_sys_usr="$HOME/.local/share";
-			conf_sys_etc="${XDG_CONFIG_HOME:-"$HOME/.config"}/wikiman";;
-		'/bin'|'/sbin'|'/usr/bin'|'/usr/sbin')
-			conf_sys_usr='/usr';
-			conf_sys_etc='/etc';;
-		'/usr/local/bin'|'/usr/local/sbin')
-			conf_sys_usr='/usr/local';
-			conf_sys_etc='/usr/local/etc';;
-		*)
-			case "$(dirname "$(command -v wikiman)")" in
-				"$HOME/bin"|"$HOME/.local/bin")
-					>&2 echo 'warning: unsupported installation path, using fallback for user install' ;
-					conf_sys_usr="$HOME/.local/share";
-					conf_sys_etc="${XDG_CONFIG_HOME:-"$HOME/.config"}/wikiman";;
-				'/bin'|'/sbin'|'/usr/bin'|'/usr/sbin')
-					>&2 echo 'warning: unsupported installation path, using fallback for Linux' ;
-					conf_sys_usr='/usr';
-					conf_sys_etc='/etc';;
-				'/usr/local/bin'|'/usr/local/sbin')
-					>&2 echo 'warning: unsupported installation path, using fallback for BSD' ;
-					conf_sys_usr='/usr/local';
-					conf_sys_etc='/usr/local/etc';;
-				*)
-					>&2 echo 'error: unsupported installation path - failed to establish fallback' ;
-					exit 5;;
-			esac;;
-	esac
-
+	conf_sys_usr="$HOME/.local/share"
+	conf_sys_etc="${XDG_CONFIG_HOME:-"$HOME/.config"}/wikiman"
 	export conf_sys_usr
 	export conf_sys_etc
 
