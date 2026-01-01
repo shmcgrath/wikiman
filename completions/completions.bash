@@ -6,7 +6,7 @@ function _wikiman_completions()
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="-l -s -f -q -a -p -k -c -H -R -S -W -v -h"
+    opts="-s -f -q -a -p -k -c -H -R -S -W -v -h"
 
     if [[ ${cur} == -* ]] ; then
         COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
@@ -39,13 +39,6 @@ function _wikiman_completions()
 		browsers="$browsers $txtbrw "
 	done
 
-    locales="$(
-		test -d /usr/share/i18n/locales && \
-		ls /usr/share/i18n/locales |\
-		awk -F'_' '/^[a-z]{2}_[^@]{2}$/ && !seen[$1] {printf("%s ", $1); seen[$1]++}' \
-		|| echo 'en'
-	)"
-
     case ${prev} in
         -s)
             COMPREPLY=($(compgen -W "$(WIKIMAN_INTERNAL=1 wikiman -C sources_bash)" -- ${cur}));;
@@ -55,8 +48,6 @@ function _wikiman_completions()
             COMPREPLY=($(compgen -W "$fuzzy_finders" -- ${cur}));;
         -H)
             COMPREPLY=($(compgen -W "$browsers" -- ${cur}));;
-        -l)
-            COMPREPLY=($(compgen -W "$locales" -- ${cur}));;
         *)
             COMPREPLY=($(compgen -W "${opts}" -- ${cur}));;
     esac
