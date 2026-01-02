@@ -15,8 +15,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
             $0 != "" { print }
         ' | tr '\n' ' '
     )"
-else
-	path="$(manpath | tr ':' '\n' | grep -v '/jvm/' | tr '\n' ' ')"
 fi
 
 available() {
