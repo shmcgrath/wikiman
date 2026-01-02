@@ -1,25 +1,38 @@
 #!/usr/bin/env bash
 
-export XZ_OPT=-e9T0
+doc_install_dir="${1:-${XDG_DATA_HOME:-$HOME/.local/share}/doc}"
+install_dir="$doc_install_dir/arch-wiki/html"
+mkdir -p "$install_dir"
 
-echo 'Downloading Arch Wiki package'
-pacman -Syw --noconfirm arch-wiki-docs
+workdir="$(mktemp -d)"
 
-echo 'Extracting data'
-tar --use-compress-program=unzstd -xf /var/cache/pacman/pkg/arch-wiki-docs-*.pkg.tar.zst usr/share/doc/arch-wiki/html/
+cleanup() {
+	rm -rf "$workdir"
+}
+trap cleanup EXIT
 
-echo 'Compressing data'
-archive="arch-wiki_$(date +'%Y%m%d').source.tar.xz"
-tar -cJf "/release/$archive" usr/share/doc/arch-wiki/html
-echo "Generated $(du -h "/release/$archive" | cut -f1) Arch Wiki archive"
+printf "%s\n" "Downloading arch-wiki-docs"
+curl -L "https://archlinux.org/packages/extra/any/arch-wiki-docs/download/" \
+	-o arch-wiki-docs.pkg.tar.zst
 
-echo 'Testing archive contents'
-pagecount="$(tar -tf "/release/$archive" | grep -c '\.html$')"
-if [ "$pagecount" -lt 5000 ]; then
-    echo 'Error: archive page count is too low'
-    exit 1
+printf "%s\n" 'Extracting data'
+unzstd -c arch-wiki-docs.pkg.tar.zst | tar -xf - \
+	--strip-components=5 \
+	-C "$workdir" \
+	usr/share/doc/arch-wiki/html/en \
+	usr/share/doc/arch-wiki/html/ArchWikiOffline.css
+
+printf "%s\n" 'Testing arch-wiki contents'
+pagecount="$(find "$workdir" -type f -name '*.html' | wc -l | tr -d '[:space:]')"
+if [ "$pagecount" -lt 2400 ]; then
+	printf "%s\n" "Error: page count is too low arch-wiki/en contains ${pagecount} html pages"
+	exit 1
 else
-    echo "Archive contains ${pagecount} HTML pages"
+	printf "%s\n" "arch-wiki/en contains ${pagecount} HTML pages"
 fi
 
-echo 'Done'
+mkdir -p "$install_dir/en"
+rsync -a "$workdir/en/" "$install_dir/en/"
+cp -f "$workdir/ArchWikiOffline.css" "$install_dir/ArchWikiOffline.css"
+
+printf "%s\n" 'Done arch-wiki-docs'

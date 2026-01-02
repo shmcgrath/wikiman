@@ -22,18 +22,22 @@ mv "$dir/doc/pages" "$dir/doc/en"
 
 printf "%s\n" "Moving tldr en to install directory"
 mkdir -p "$install_dir/en"
-rsync -a ./doc/en/ "$install_dir/en/"
+rsync -a "$dir/doc/en/" "$install_dir/en/"
 
 printf "%s\n" "Counting Markdown pages"
 pagecount="$(find "$install_dir" -type f -name '*.md' | wc -l | tr -d '[:space:]')"
 if [ "$pagecount" -lt 6500 ]; then
 	printf "%s\n" "Error: page count is too low tldr-pages/en contains ${pagecount} markdown pages"
-	#exit 1
+	exit 1
 else
 	printf "%s\n" "tldr-pages/en contains ${pagecount} markdown pages"
 fi
 
 # cleanup and delete temporary directory
-rm -rf "$tmp_dir"
+cleanup() {
+    rm -rf "$tmp_dir"
+}
+trap cleanup EXIT
+
 
 printf "%s\n" "Done installing tldr"
