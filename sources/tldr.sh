@@ -72,7 +72,7 @@ list() {
 
 	setup || return 1
 
-	eval "$conf_find $paths -type f -name '*.html'" 2>/dev/null | \
+	eval "$conf_find $paths -type f -name '*.md'" 2>/dev/null | \
 	"$conf_awk" -F '/' \
 		"BEGIN {
 			IGNORECASE=1;
