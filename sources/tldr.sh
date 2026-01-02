@@ -39,15 +39,7 @@ setup() {
 		return 1
 	fi
 
-	langs="$(echo "$conf_wiki_lang" | "$conf_awk" -F ' ' "{
-		for(i=1;i<=NF;i++) {
-			lang=tolower(\$i);
-			gsub(/[-_].*$/,\"\",lang);
-			locale=toupper(\$i);
-			gsub(/^.*[-_]/,\"\",locale);
-			printf(\"%s%s%s\",lang,(length(\$i)==2)?\"*\":\"_\"locale,(i==NF)?\"\":\"|\");
-		}
-	}")"
+	langs="en"
 
 	search_paths="$(
 		"$conf_find" "$path" -maxdepth 1 -mindepth 1 -type d -printf '%p\n' | \
@@ -101,7 +93,7 @@ list() {
 			lang=\$$nf;
 			path=\$0;
 
-			print title, lang, \"$name\", path;
+			print title, \"$name\", path;
 		};"
 
 }
@@ -164,7 +156,7 @@ search() {
 				}
 
 				if (accuracy > 0) {
-					printf(\"%s\t%s\t%s\t$name\t%s\n\",accuracy,title,lang,path);
+					printf(\"%s\t%s\t$name\t%s\n\",accuracy,title,path);
 				}
 			};" | \
 		"$conf_sort" -rV -k1 | cut -d'	' -f2-
@@ -200,7 +192,7 @@ search() {
 					lang=\$$nf;
 					path=\$0;
 
-					printf(\"%s\t%s\t%s\t$name\t%s\n\",hits,title,lang,path);
+					printf(\"%s\t%s\t$name\t%s\n\",hits,title,path);
 				};" | \
 			"$conf_sort" -rV -k1 | cut -d'	' -f2-
 		)"

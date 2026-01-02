@@ -34,22 +34,7 @@ setup() {
 	results_title=''
 	results_text=''
 
-	langs="$(echo "$conf_wiki_lang" | "$conf_awk" -F ' ' '{
-		for (i = 1; i <= NF; i++) {
-			lang = $i;
-			gsub(/[_-].*$/,"",lang);
-			lang = tolower(lang);
-			loc = $i;
-			locale = gsub(/^.*[_-]/,"",loc);
-			loc = toupper(loc);
-			if (locale)
-				printf("%s-%s%s", lang, loc, (i == NF) ? "" : "|");
-			else {
-				printf("%s|", lang);
-				printf("%s*%s", lang, (i == NF) ? "" : "|");
-			}
-		}
-	}')"
+	langs="en"
 
 	search_paths="$(
 		"$conf_find" "$path" -maxdepth 1 -mindepth 1 -type d -printf '%p\n' | \
@@ -108,7 +93,7 @@ list() {
 				title = title \" (Category)\";
 			}
 
-			print title, lang, \"$name\", path;
+			print title, \"$name\", path;
 
 		};"
 
