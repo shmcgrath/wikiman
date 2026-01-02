@@ -1,4 +1,5 @@
 #!/bin/sh
+##!/usr/bin/env bash
 
 # BSD compatibility: Use GNU find and awk
 
@@ -67,9 +68,8 @@ init() {
 	sources_dir="$conf_local_share/wikiman/sources"
 
 	# Detect source modules
-
 	sources="$(
-		eval "$sources_dir -type f 2>/dev/null" | \
+		eval "$conf_find $sources_dir -type f 2>/dev/null" | \
 		"$conf_awk" -F '/' \
 			"BEGIN {OFS=\"\t\"} {
 				path = \$0;
@@ -100,7 +100,6 @@ init() {
 	# Set configuration variables
 
 	conf_sources="${conf_sources:-$available_sources}"
-	conf_fuzzy_finder="fzf"
 	conf_quick_search="false"
 	conf_and_operator="false"
 	conf_raw_output="false"
@@ -112,7 +111,6 @@ init() {
 	conf_tui_html="w3m"
 
 	export conf_sources
-	export conf_fuzzy_finder
 	export conf_quick_search
 	export conf_and_operator
 	export conf_raw_output
@@ -178,7 +176,7 @@ picker_tui() {
 
 	choice="$(
 		echo "$all_results" | \
-		eval "$conf_fuzzy_finder --with-nth $columns --delimiter '\t' \
+		eval "fzf --with-nth $columns --delimiter '\t' \
 			$preview --reverse --preview-window=65%:wrap:border-sharp: --prompt 'wikiman > '"
 	)"
 
@@ -316,7 +314,7 @@ shift "$((OPTIND - 1))"
 
 # Dependency check
 
-dependencies="man rg w3m $conf_awk $conf_tui_html $conf_fuzzy_finder $conf_find"
+dependencies="man rg w3m zstd fzf $conf_awk $conf_tui_html $conf_find parallel"
 
 for dep in $dependencies; do
 	command -v "$dep" >/dev/null 2>/dev/null || {
@@ -324,15 +322,6 @@ for dep in $dependencies; do
 		exit 127
 	}
 done
-
-# Check if fuzzy finder compatible with used fzf's parameters
-
-case $conf_fuzzy_finder in
-	'fzf'|'sk');;
-	*)
-		>&2 echo "error: $conf_fuzzy_finder is not compatible with the paramters used in this script"
-		exit 4;;
-esac
 
 if [ $# = 0 ]; then
 	user_action='list'
