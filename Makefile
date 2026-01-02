@@ -27,6 +27,7 @@ all: core widgets completions config docs
 
 build-source-docs:
 	@./build/sources/tldr.sh $(DOC_INSTALL_DIR)
+	@./build/sources/arch.sh $(DOC_INSTALL_DIR)
 
 install-sources:
 	@mkdir -p $(WIKIMAN_INSTALL_DIR)/sources
