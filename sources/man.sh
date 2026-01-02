@@ -4,6 +4,20 @@ name='man'
 description='Local system'\''s manual pages'
 path="$(manpath | tr ':' ' ')"
 
+
+# adjust for macOS
+if [ "$(uname -s)" = "Darwin" ]; then
+    path="$(
+        manpath | tr ':' '\n' |
+        awk '
+            !seen[$0]++ &&
+            $0 !~ /Cryptexes/ &&
+            $0 !~ /SDKs/ &&
+            $0 != "" { print }
+        ' | tr '\n' ' '
+    )"
+fi
+
 available() {
 
 	[ -d "$path" ]
