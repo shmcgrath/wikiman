@@ -4,7 +4,6 @@ name='man'
 description='Local system'\''s manual pages'
 path="$(manpath | tr ':' ' ')"
 
-
 # adjust for macOS
 if [ "$(uname -s)" = "Darwin" ]; then
     path="$(
@@ -16,6 +15,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
             $0 != "" { print }
         ' | tr '\n' ' '
     )"
+else
+	path="$(manpath | tr ':' '\n' | grep -v '/jvm/' | tr '\n' ' ')"
 fi
 
 available() {
