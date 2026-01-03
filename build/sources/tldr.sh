@@ -18,19 +18,19 @@ git clone --depth 1 --single-branch --branch main https://github.com/tldr-pages/
 printf "%s\n" "Restructuring: keeping only en pages"
 find "$dir/doc" -maxdepth 1 -mindepth 1 -not -name 'pages' -exec rm -rf {} \;
 rm -rf "$dir/doc/pages.hbs"
-mv "$dir/doc/pages" "$dir/doc/en"
+mv "$dir/doc/pages" "$dir/doc/pages.en"
 
-printf "%s\n" "Moving tldr en to install directory"
-mkdir -p "$install_dir/en"
-rsync -a "$dir/doc/en/" "$install_dir/en/"
+printf "%s\n" "Moving tldr pages.en to install directory"
+mkdir -p "$install_dir/pages.en"
+rsync -a "$dir/doc/pages.en/" "$install_dir/pages.en/"
 
 printf "%s\n" "Counting Markdown pages"
 pagecount="$(find "$install_dir" -type f -name '*.md' | wc -l | tr -d '[:space:]')"
 if [ "$pagecount" -lt 6500 ]; then
-	printf "%s\n" "Error: page count is too low tldr-pages/en contains ${pagecount} markdown pages"
+	printf "%s\n" "Error: page count is too low tldr-pages/pages.en contains ${pagecount} markdown pages"
 	exit 1
 else
-	printf "%s\n" "tldr-pages/en contains ${pagecount} markdown pages"
+	printf "%s\n" "tldr-pages/pages.en contains ${pagecount} markdown pages"
 fi
 
 # cleanup and delete temporary directory
