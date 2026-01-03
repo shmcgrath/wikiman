@@ -1,5 +1,6 @@
 #!/bin/sh
 ##!/usr/bin/env bash
+wikibat="bat --color=always --style=header-filename,grid"
 
 # BSD compatibility: Use GNU find and awk
 
@@ -37,8 +38,13 @@ tui_preview() {
 					printf(\"man -S %s -L %s %s\n\",sec,\$2,\$1);
 				}
 			} else {
-				gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
-				printf(\"w3m \\\"%s\\\"\n\",\$NF);
+				if (\$NF ~ /\\.html?$/) {
+					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+					printf(\"w3m \\\"%s\\\"\n\",\$NF);
+				} else {
+					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+					printf(\"$wikibat --paging=never \\\"%s\\\"\\n\",\$NF);
+				}
 			}
 		};"
 	)"
@@ -196,8 +202,13 @@ picker_tui() {
 						printf(\"man -S %s -L %s %s\n\",sec,\$2,\$1);
 					}
 				} else {
-					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
-					printf(\"$conf_tui_html \\\"%s\\\"\n\",\$NF);
+					if (\$NF ~ /\\.html?$/) {
+						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+						printf(\"$conf_tui_html \\\"%s\\\"\n\",\$NF);
+					} else {
+						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+						printf(\"$wikibat --paging=always \\\"%s\\\"\\n\",\$NF);
+					}
 				}
 			};"
 	)"
