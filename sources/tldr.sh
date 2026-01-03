@@ -84,7 +84,7 @@ list() {
 				title = title ((i==$nf+2) ? \"\" : \"/\") \$i;
 			}
 
-			gsub(/\.html$/,\"\",title);
+			gsub(/\.md$/,\"\",title);
 			gsub(\"_\",\" \",title);
 			gsub(\"-\",\" \",title);
 
@@ -103,7 +103,7 @@ search() {
 	setup || return 1
 
 	results_title="$(
-		eval "$conf_find $paths -type f -name '*.html'" 2>/dev/null | \
+		eval "$conf_find $paths -type f -name '*.md'" 2>/dev/null | \
 		"$conf_awk" -F '/' \
 			"BEGIN {
 				IGNORECASE=1;
@@ -117,7 +117,7 @@ search() {
 					title = title ((i==$nf+2) ? \"\" : \"/\") \$i;
 				}
 
-				gsub(/\.html$/,\"\",title);
+				gsub(/\.md$/,\"\",title);
 				gsub(\"_\",\" \",title);
 				gsub(\"-\",\" \",title);
 
@@ -183,7 +183,7 @@ search() {
 						title = title ((i==$nf+2) ? \"\" : \"/\") \$i;
 					}
 
-					gsub(/\.html$/,\"\",title);
+					gsub(/\.md$/,\"\",title);
 					gsub(\"_\",\" \",title);
 					gsub(\"-\",\" \",title);
 
