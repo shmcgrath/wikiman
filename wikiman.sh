@@ -173,15 +173,9 @@ picker_tui() {
 	fi
 
 	if [ "$conf_tui_source_column" = 'true' ]; then
-		source_column='3,'
+		source_column='3'
 	fi
-
-	if [ "$(echo "$conf_man_lang" | wc -w)" = '1' ] && \
-			[ "$(echo "$conf_wiki_lang" | wc -w)" = '1' ]; then
-		columns="${source_column}1"
-	else
-		columns="${source_column}2,1"
-	fi
+	columns="1,2${source_column}"
 
 	choice="$(
 		echo "$all_results" | \

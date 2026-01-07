@@ -1,6 +1,6 @@
 #!/bin/sh
 
-name='arch'
+source_name='arch'
 description='ArchWiki'
 path="$conf_local_share/doc/arch-wiki/html"
 
@@ -12,19 +12,19 @@ available() {
 
 describe() {
 
-	printf "%s\t%s\n" "$name" "$description"
+	printf "%s\t%s\n" "$source_name" "$description"
 
 }
 
 info() {
 
 	if available; then
-		state="$(echo "$conf_sources" | grep -q "$name" && echo "+")"
+		state="$(echo "$conf_sources" | grep -q "$source_name" && echo "+")"
 		count="$("$conf_find" "$path" -type f | wc -l | sed 's| ||g')"
-		printf '%-10s %-28s %3s %8i  %s\n' "$name" "$description" "$state" "$count" "$path"
+		printf '%-10s %-28s %3s %8i  %s\n' "$source_name" "$description" "$state" "$count" "$path"
 	else
-		state="$(echo "$conf_sources" | grep -q "$name" && echo "x")"
-		printf '%-10s %-30s %-11s (not installed)\n' "$name" "$description" "$state"
+		state="$(echo "$conf_sources" | grep -q "$source_name" && echo "x")"
+		printf '%-10s %-30s %-11s (not installed)\n' "$source_name" "$description" "$state"
 	fi
 
 }
@@ -93,7 +93,7 @@ list() {
 				title = title \" (Category)\";
 			}
 
-			print title, \"$name\", path;
+			print \"$source_name\", title, path;
 
 		};"
 
@@ -162,7 +162,7 @@ search() {
 				}
 
 				if (accuracy>0) {
-					print accuracy, title, lang, \"$name\", path;
+					print accuracy, \"$source_name\", title, path;
 				}
 
 			};" | \
@@ -201,7 +201,7 @@ search() {
 						title = title \" (Category)\";
 					}
 
-					print hits+0, title, lang, \"$name\", path;
+					print hits+0, \"$source_name\", title, path;
 				};" | \
 			"$conf_sort" -rV -k1 | cut -d'	' -f2-
 		)"

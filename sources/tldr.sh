@@ -1,6 +1,6 @@
 #!/bin/sh
 
-name='tldr'
+source_name='tldr'
 description='Console commands cheatsheets'
 path="$conf_local_share/doc/tldr-pages"
 
@@ -12,19 +12,19 @@ available() {
 
 describe() {
 
-	printf "%s\t%s\n" "$name" "$description"
+	printf "%s\t%s\n" "$source_name" "$description"
 
 }
 
 info() {
 
 	if available; then
-		state="$(echo "$conf_sources" | grep -q "$name" && echo "+")"
+		state="$(echo "$conf_sources" | grep -q "$source_name" && echo "+")"
 		count="$("$conf_find" "$path" -type f | wc -l | sed 's| ||g')"
-		printf '%-10s %-28s %3s %8i  %s\n' "$name" "$description" "$state" "$count" "$path"
+		printf '%-10s %-28s %3s %8i  %s\n' "$source_name" "$description" "$state" "$count" "$path"
 	else
-		state="$(echo "$conf_sources" | grep -q "$name" && echo "x")"
-		printf '%-10s %-30s %-11s (not installed)\n' "$name" "$description" "$state"
+		state="$(echo "$conf_sources" | grep -q "$source_name" && echo "x")"
+		printf '%-10s %-30s %-11s (not installed)\n' "$source_name" "$description" "$state"
 	fi
 
 }
@@ -93,7 +93,7 @@ list() {
 			lang=\$$nf;
 			path=\$0;
 
-			print title, \"$name\", path;
+			print \"$source_name\", title, path;
 		};"
 
 }
@@ -156,7 +156,7 @@ search() {
 				}
 
 				if (accuracy > 0) {
-					printf(\"%s\t%s\t$name\t%s\n\",accuracy,title,path);
+					printf(\"%s\t$source_name\t%s\t%s\n\",accuracy,title,path);
 				}
 			};" | \
 		"$conf_sort" -rV -k1 | cut -d'	' -f2-
@@ -192,7 +192,7 @@ search() {
 					lang=\$$nf;
 					path=\$0;
 
-					printf(\"%s\t%s\t$name\t%s\n\",hits,title,path);
+					printf(\"%s\t$source_name\t%s\t%s\n\",hits,title,path);
 				};" | \
 			"$conf_sort" -rV -k1 | cut -d'	' -f2-
 		)"
