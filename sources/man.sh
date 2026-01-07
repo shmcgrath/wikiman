@@ -163,7 +163,7 @@ search() {
 							accuracy = 0;
 					} else {
 						gsub(/$rg_query/,\"\",matched);
-						accuracy = 100-length(matched)*100/length(title);
+						accuracy = (length(title) ? 100 - length(matched)*100/length(title) : 0);
 					}
 
 					if (accuracy>0)
@@ -192,6 +192,8 @@ search() {
 
 	apropos -L en >/dev/null 2>/dev/null
 	apropos_lang_mode="$?"
+
+	echo apropos_lang_mode
 
 	if [ "$conf_quick_search" != 'true' ] && [ "$apropos_lang_mode" != '5' ]; then
 

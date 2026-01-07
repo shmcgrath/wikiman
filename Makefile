@@ -14,6 +14,7 @@ BUILDDIR:=	${WORKDIR}/pkgbuild
 SOURCESDIR:=	${WORKDIR}/srcbuild
 PLISTFILE:=	${WORKDIR}/pkg-plist
 XDG_DATA_HOME  := $(shell [ -n "$$XDG_DATA_HOME" ] && printf %s "$$XDG_DATA_HOME" || printf %s "$(HOME)/.local/share")
+XDG_CONFIG_HOME := $(shell [ -n "$$XDG_CONFIG_HOME" ] && printf %s "$$XDG_CONFIG_HOME" || printf %s "$(HOME)/.config")
 DOC_INSTALL_DIR:= $(XDG_DATA_HOME)/doc
 WIKIMAN_INSTALL_DIR:= $(XDG_DATA_HOME)/wikiman
 BIN_INSTALL_DIR := $(HOME)/.local/bin
@@ -33,7 +34,6 @@ install-sources:
 	@mkdir -p $(WIKIMAN_INSTALL_DIR)/sources
 	install -m 755 $(WIKIMAN)/sources/arch.sh $(WIKIMAN_INSTALL_DIR)/sources
 	install -m 755 $(WIKIMAN)/sources/tldr.sh $(WIKIMAN_INSTALL_DIR)/sources
-	install -m 755 $(WIKIMAN)/sources/man.sh $(WIKIMAN_INSTALL_DIR)/sources
 
 install-widgets:
 	@mkdir -p $(WIKIMAN_INSTALL_DIR)
@@ -55,3 +55,12 @@ uninstall-manpage:
 uninstall-wikiman: uninstall-manpage
 	rm -f $(BIN_INSTALL_DIR)/wikiman
 	rm -rf $(WIKIMAN_INSTALL_DIR)
+
+install-test:
+	install -m 755 $(WIKIMAN)/sources/man.sh $(WIKIMAN_INSTALL_DIR)/sources
+
+test-inst:
+	@mkdir -p /usr/local/bin
+	chmod 755 /usr/local/bin
+	install -m755 $(WIKIMAN)/wikiman.sh /usr/local/bin/wikiman 
+

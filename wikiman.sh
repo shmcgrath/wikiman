@@ -19,7 +19,7 @@ echo | "$conf_sort" -V >/dev/null 2>/dev/null || \
 export conf_find
 export conf_awk
 export conf_sort
-
+	
 newline='
 '
 export newline
@@ -41,6 +41,9 @@ tui_preview() {
 				if (\$NF ~ /\\.html?$/) {
 					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 					printf(\"w3m \\\"%s\\\"\n\",\$NF);
+				} else if (\$NF ~ /\\.(md|markdown)$/) {
+					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+					printf(\"$wikibat --paging=never \\\"%s\\\"\n\",\$NF);
 				} else {
 					gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 					printf(\"$wikibat --paging=never \\\"%s\\\"\\n\",\$NF);
@@ -201,10 +204,13 @@ picker_tui() {
 						gsub(/ .*$/,\"\",\$1);
 						printf(\"man -S %s -L %s %s\n\",sec,\$2,\$1);
 					}
-				} else {
+			} else {
 					if (\$NF ~ /\\.html?$/) {
 						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 						printf(\"$conf_tui_html \\\"%s\\\"\n\",\$NF);
+					} else if (\$NF ~ /\\.(md|markdown)$/) {
+						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
+						printf(\"glow \\\"%s\\\"\n\",\$NF);
 					} else {
 						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 						printf(\"$wikibat --paging=always \\\"%s\\\"\\n\",\$NF);
@@ -325,7 +331,7 @@ shift "$((OPTIND - 1))"
 
 # Dependency check
 
-dependencies="man rg w3m zstd fzf $conf_awk $conf_tui_html $conf_find parallel"
+dependencies="man rg w3m zstd fzf glow $conf_awk $conf_tui_html $conf_find parallel"
 
 for dep in $dependencies; do
 	command -v "$dep" >/dev/null 2>/dev/null || {

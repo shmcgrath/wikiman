@@ -155,10 +155,7 @@ search() {
 					gsub(\" \",\"\",matched);
 					gsub(\"_\",\"\",matched);
 
-					if (length(matched)==0)
-						accuracy = length(title)*100;
-					else
-						accuracy = 100-lm*100/length(title);
+					accuracy = (length(title) ? 100 - length(matched)*100/length(title) : 0);
 				}
 
 				if (accuracy>0) {

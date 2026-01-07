@@ -44,7 +44,7 @@ pkg install wikiman*.txz
 
 Note that on macOS and brew you need to install parallel independently, not with moreutils.
 
-Dependencies: `man`, `fzf`, `ripgrep`, `awk`, `w3m`, `coreutils`, `parallel`
+Dependencies: `man`, `fzf`, `ripgrep`, `awk`, `w3m`, `coreutils`, `parallel`, `glow`
 
 ```bash
 # Clone from GitHub
