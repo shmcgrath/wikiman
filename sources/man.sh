@@ -193,8 +193,6 @@ search() {
 	apropos -L en >/dev/null 2>/dev/null
 	apropos_lang_mode="$?"
 
-	echo apropos_lang_mode
-
 	if [ "$conf_quick_search" != 'true' ] && [ "$apropos_lang_mode" != '5' ]; then
 
 		for lang in $conf_man_lang; do
