@@ -88,7 +88,7 @@ list() {
 			gsub(\"_\",\" \",title);
 			gsub(\"-\",\" \",title);
 
-			title = title \" (\" \$($nf+1) \")\"
+			title = title \" [\" \$($nf+1) \"]\"
 
 			lang=\$$nf;
 			path=\$0;
@@ -121,7 +121,7 @@ search() {
 				gsub(\"_\",\" \",title);
 				gsub(\"-\",\" \",title);
 
-				title = title \" (\" \$($nf+1) \")\"
+				title = title \" [\" \$($nf+1) \"]\"
 
 				lang=\$$nf;
 				path=\$0;
@@ -187,7 +187,7 @@ search() {
 					gsub(\"_\",\" \",title);
 					gsub(\"-\",\" \",title);
 
-					title = title \" (\" \$($nf+1) \")\"
+					title = title \" [\" \$($nf+1) \"]\"
 
 					lang=\$$nf;
 					path=\$0;
