@@ -173,9 +173,10 @@ picker_tui() {
 	fi
 
 	if [ "$conf_tui_source_column" = 'true' ]; then
-		source_column='3'
+		columns="1,2,3"
+	else
+		columns="1,2"
 	fi
-	columns="1,2${source_column}"
 
 	choice="$(
 		echo "$all_results" | \
