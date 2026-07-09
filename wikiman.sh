@@ -203,9 +203,6 @@ picker_tui() {
 					if (\$NF ~ /\\.html?$/) {
 						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 						printf(\"$conf_tui_html \\\"%s\\\"\n\",\$NF);
-					} else if (\$NF ~ /\\.(md|markdown)$/) {
-						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
-						printf(\"glow \\\"%s\\\"\n\",\$NF);
 					} else {
 						gsub(\"\\\"\",\"\\\\\\\"\",\$NF);
 						printf(\"$wikibat --paging=always \\\"%s\\\"\\n\",\$NF);
@@ -326,7 +323,7 @@ shift "$((OPTIND - 1))"
 
 # Dependency check
 
-dependencies="man rg w3m zstd fzf glow $conf_awk $conf_tui_html $conf_find parallel"
+dependencies="man rg w3m zstd fzf $conf_awk $conf_tui_html $conf_find parallel"
 
 for dep in $dependencies; do
 	command -v "$dep" >/dev/null 2>/dev/null || {
